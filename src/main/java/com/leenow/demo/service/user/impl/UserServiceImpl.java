@@ -1,7 +1,6 @@
 package com.leenow.demo.service.user.impl;
 
-import cn.hutool.core.lang.UUID;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.leenow.demo.exception.BadRequestExpection;
 import com.leenow.demo.exception.NotFoundExpection;
@@ -92,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public boolean passwordMatch(@NonNull User user, @Nullable String password) {
         Assert.notNull(user, "User must not be null");
-        return StrUtil.isNotBlank(user.getPassword()) && BCrypt.checkpw(password, user.getPassword());
+        return CharSequenceUtil.isNotBlank(user.getPassword()) && BCrypt.checkpw(password, user.getPassword());
     }
 
     @Override

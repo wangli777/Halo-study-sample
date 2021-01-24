@@ -1,6 +1,5 @@
 package com.leenow.demo.mapper.user;
 import org.apache.ibatis.annotations.Param;
-import java.util.List;
 import java.util.Optional;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -13,8 +12,14 @@ import org.springframework.lang.NonNull;
  * @description:
  */
 public interface UserMapper extends BaseMapper<User> {
+    /**
+     * find User by username
+     *
+     * @param username username
+     * @return Optional<User>
+     */
     @NonNull
-    Optional<User> findByUsername(@NonNull @Param("username")String username);
+    Optional<User> findByUsername(@NonNull @Param("username") String username);
 
 
 }
