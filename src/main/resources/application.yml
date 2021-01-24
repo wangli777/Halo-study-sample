@@ -1,0 +1,8 @@
+# 应用名称
+spring.application.name: demo
+
+# 日志配置
+logging:
+  config: classpath:config/logback/logback-spring.xml
+
+
