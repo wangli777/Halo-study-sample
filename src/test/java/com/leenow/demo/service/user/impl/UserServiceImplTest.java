@@ -1,7 +1,5 @@
 package com.leenow.demo.service.user.impl;
 
-import cn.hutool.core.lang.Console;
-import cn.hutool.crypto.digest.BCrypt;
 import com.leenow.demo.model.entity.user.User;
 import com.leenow.demo.model.param.LoginParam;
 import com.leenow.demo.service.user.UserService;

@@ -1,0 +1,28 @@
+# 应用名称
+spring.application.name: demo
+
+server:
+  port: 8888
+  tomcat:
+    uri-encoding: utf-8
+  servlet:
+    #设置项目启动的根路径
+    context-path: /demo
+spring:
+  datasource:
+    #    type: com.zaxxer.hikari.HikariDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    # H2 database configuration.
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+# 日志配置
+logging:
+  config: classpath:config/logback/logback-spring.xml
+  level:
+    com.leenow.demo.mapper: debug
+
+
