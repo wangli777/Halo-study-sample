@@ -1,7 +1,8 @@
 package com.leenow.demo.config;
 
-import com.leenow.demo.cache.AbstractCacheStore;
+
 import com.leenow.demo.cache.AbstractStringCacheStore;
+import com.leenow.demo.cache.InMemoryCacheStore;
 import com.leenow.demo.config.properties.AppConfigProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,16 @@ public class AppBaseConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public AbstractStringCacheStore stringCacheStore() {
-        // TODO: 2021/1/25
-        return null;
+        AbstractStringCacheStore stringCacheStore;
+        switch (configProperties.getCache()) {
+//            case "redis":
+//                stringCacheStore = new RedisCacheStore();
+            case "memory":
+            default:
+                stringCacheStore = new InMemoryCacheStore();
+                break;
+        }
+        log.info("cache store load impl : [{}]", stringCacheStore.getClass());
+        return stringCacheStore;
     }
 }

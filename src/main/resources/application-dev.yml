@@ -7,7 +7,7 @@ server:
     uri-encoding: utf-8
   servlet:
     #设置项目启动的根路径
-    context-path: /demo
+    context-path: /
 spring:
   datasource:
     #    type: com.zaxxer.hikari.HikariDataSource
@@ -53,6 +53,7 @@ mybatis-plus:
 logging:
   config: classpath:config/logback/logback-spring.xml
   level:
+    #    root: debug
     com.leenow.demo.mapper: debug
 
 

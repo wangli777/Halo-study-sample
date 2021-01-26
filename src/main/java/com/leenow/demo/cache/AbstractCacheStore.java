@@ -49,11 +49,6 @@ public abstract class AbstractCacheStore<K, V> implements CacheStore<K, V> {
         return putInternalIfAbsent(key, buildCacheWrapper(value, timeout, timeUnit));
     }
 
-    @Override
-    public void delete(K key) {
-
-    }
-
     abstract Optional<CacheWrapper<V>> getInternal(@NonNull K key);
 
     abstract void putInternal(@NonNull K key, @NonNull CacheWrapper<V> value);

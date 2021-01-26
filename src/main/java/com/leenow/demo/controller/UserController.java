@@ -30,11 +30,8 @@ public class UserController {
 
     @PostMapping("login")
     public BaseResponse<AuthToken> login(@RequestBody @Valid LoginParam loginParam){
-//        javax.vali
         AuthToken token = userService.loginCheck(loginParam);
-        // TODO: 2021/1/24
 
-
-        return null;
+        return BaseResponse.ok(token);
     }
 }

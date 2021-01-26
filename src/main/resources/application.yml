@@ -3,8 +3,16 @@ spring.application.name: demo
 
 spring:
   profiles:
-    active: @profiles.active@
-#    active: dev
+    #    active: @profiles.active@
+    active: dev
+#jwt:
+#  # token过期时间
+#  expiration: 30
+#  # token加密密钥
+#  secret: 123456
+base:
+  cache: memory
+
 
 
 

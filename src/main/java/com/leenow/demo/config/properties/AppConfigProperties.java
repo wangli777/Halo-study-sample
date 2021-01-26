@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @description:
  */
 @Data
-@ConfigurationProperties("halo")
+@ConfigurationProperties("base")
 public class AppConfigProperties {
     /**
      * cacheStore 实现

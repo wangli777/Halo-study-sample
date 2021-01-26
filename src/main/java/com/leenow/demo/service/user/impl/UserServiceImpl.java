@@ -2,9 +2,11 @@ package com.leenow.demo.service.user.impl;
 
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.crypto.digest.BCrypt;
+import com.leenow.demo.cache.AbstractStringCacheStore;
 import com.leenow.demo.exception.BadRequestExpection;
 import com.leenow.demo.exception.NotFoundExpection;
 import com.leenow.demo.model.param.LoginParam;
+import com.leenow.demo.security.SecurityUtils;
 import com.leenow.demo.security.context.SecutiryContextHolder;
 import com.leenow.demo.security.token.AuthToken;
 import com.leenow.demo.util.UUIDUtils;
@@ -19,6 +21,7 @@ import com.leenow.demo.service.user.UserService;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: LeeNow WangLi
@@ -28,6 +31,12 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    private final AbstractStringCacheStore cacheStore;
+
+    public UserServiceImpl(AbstractStringCacheStore cacheStore) {
+        this.cacheStore = cacheStore;
+    }
 
     @Override
     @NonNull
@@ -44,14 +53,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // TODO: 2021/1/24 事件-登录成功
 
         //Generate accessToken
-
-
         return buildAuthToken(user);
     }
 
     @NonNull
     private AuthToken buildAuthToken(@NonNull User user) {
-        Assert.notNull(user,"User must not be null");
+        Assert.notNull(user, "User must not be null");
 
         AuthToken authToken = new AuthToken();
 
@@ -59,7 +66,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         authToken.setRefreshToken(UUIDUtils.randomUUIDWithoutDash());
         authToken.setExpiredIn(ACCESS_TOKEN_EXPIRED_SECONDS);
 
-        // TODO: 2021/1/24 缓存authToken
+        // Cache those tokens with userId as key
+        cacheStore.putAny(SecurityUtils.buildTokenAccessKeyWithUser(user), authToken.getAccessToken(), ACCESS_TOKEN_EXPIRED_SECONDS, TimeUnit.SECONDS);
+        cacheStore.putAny(SecurityUtils.buildRefreshTokenAccessKeyWithUser(user), authToken.getRefreshToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
+
+        // Cache those tokens with userId as value
+        cacheStore.putAny(SecurityUtils.buildAccessTokenKey(authToken.getAccessToken()), user.getId(), ACCESS_TOKEN_EXPIRED_SECONDS, TimeUnit.SECONDS);
+        cacheStore.putAny(SecurityUtils.buildRefreshTokenKey(authToken.getRefreshToken()), user.getId(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
 
         return authToken;
     }

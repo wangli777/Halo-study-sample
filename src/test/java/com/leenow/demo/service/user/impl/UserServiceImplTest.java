@@ -1,5 +1,6 @@
 package com.leenow.demo.service.user.impl;
 
+import cn.hutool.crypto.digest.BCrypt;
 import com.leenow.demo.model.entity.user.User;
 import com.leenow.demo.model.param.LoginParam;
 import com.leenow.demo.service.user.UserService;
@@ -25,7 +26,7 @@ class UserServiceImplTest {
 
     @Test
     void loginCheck() {
-//        System.out.println(BCrypt.hashpw("123456", BCrypt.gensalt()));
+        System.out.println(BCrypt.hashpw("123456", BCrypt.gensalt()));
         assertNull(null);
     }
 
