@@ -4,6 +4,7 @@ spring.application.name: demo
 spring:
   profiles:
     active: @profiles.active@
+#    active: dev
 
 
 
