@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.leenow.demo.model.entity.user.User;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * @author: LeeNow WangLi
@@ -18,7 +19,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param username username
      * @return Optional<User>
      */
-    @NonNull
+    @Nullable
     Optional<User> findByUsername(@NonNull @Param("username") String username);
 
 

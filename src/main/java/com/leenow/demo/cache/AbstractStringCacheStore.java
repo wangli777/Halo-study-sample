@@ -1,8 +1,8 @@
 package com.leenow.demo.cache;
 
 
-import cn.hutool.json.JSONUtil;
 import com.leenow.demo.exception.ServiceException;
+import com.leenow.demo.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
@@ -27,7 +27,7 @@ public abstract class AbstractStringCacheStore extends AbstractCacheStore<String
         Assert.hasText(json, "json value must not be null");
         CacheWrapper<String> cacheWrapper = null;
         try {
-            cacheWrapper = JSONUtil.toBean(json, CacheWrapper.class);
+            cacheWrapper = JsonUtils.jsonToObject(json, CacheWrapper.class);
         } catch (Exception e) {
             log.debug("Failed to convert json to wrapper value bytes: [{}]", json, e);
         }
@@ -37,7 +37,7 @@ public abstract class AbstractStringCacheStore extends AbstractCacheStore<String
 
     public <T> void putAny(String key, T value) {
         try {
-            put(key, JSONUtil.toJsonStr(value));
+            put(key, JsonUtils.objectToJson(value));
         } catch (Exception e) {
             throw new ServiceException("Failed to convert " + value + " to json", e);
         }
@@ -45,7 +45,7 @@ public abstract class AbstractStringCacheStore extends AbstractCacheStore<String
 
     public <T> void putAny(String key, T value, long timeout, TimeUnit timeUnit) {
         try {
-            put(key, JSONUtil.toJsonStr(value), timeout, timeUnit);
+            put(key, JsonUtils.objectToJson(value), timeout, timeUnit);
         } catch (Exception e) {
             throw new ServiceException("Failed to convert " + value + " to json", e);
         }
@@ -56,7 +56,7 @@ public abstract class AbstractStringCacheStore extends AbstractCacheStore<String
 
         return get(key).map(value -> {
             try {
-                return JSONUtil.toBean(value, type);
+                return JsonUtils.jsonToObject(value, type);
             } catch (Exception e) {
                 log.error("Failed to convert json to type: " + type.getName(), e);
                 return null;

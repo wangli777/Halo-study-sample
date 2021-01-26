@@ -17,4 +17,9 @@ public class AppConfigProperties {
      * redis
      */
     private String cache = "memory";
+
+    /**
+     * Authentication enabled
+     */
+    private boolean authEnabled = true;
 }

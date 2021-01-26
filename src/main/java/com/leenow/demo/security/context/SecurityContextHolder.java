@@ -8,10 +8,10 @@ import org.springframework.lang.Nullable;
  * @date: 2021/1/24 19:37
  * @description:
  */
-public class SecutiryContextHolder {
+public class SecurityContextHolder {
     private static final ThreadLocal<SecurityContext> CONTEXT_HOLDER = new ThreadLocal<>();
 
-    private SecutiryContextHolder() {
+    private SecurityContextHolder() {
     }
 
     @NonNull
@@ -34,7 +34,7 @@ public class SecutiryContextHolder {
     /**
      * remove context.
      */
-    public static void removeContext() {
+    public static void clearContext() {
         CONTEXT_HOLDER.remove();
     }
 

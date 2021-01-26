@@ -1,4 +1,4 @@
-package com.leenow.demo.security;
+package com.leenow.demo.security.util;
 
 import com.leenow.demo.model.entity.user.User;
 import org.springframework.util.Assert;

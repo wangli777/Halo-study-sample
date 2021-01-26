@@ -41,5 +41,9 @@ public interface UserService extends IService<User> {
      * @param password plain password
      * @return true if the given password is match the user password; false otherwise
      */
-    boolean passwordMatch(@NonNull User user, @Nullable String password) ;
+    boolean passwordMatch(@NonNull User user, @Nullable String password);
+
+    Optional<User> getAdminUser();
+
+    void clearToken();
 }

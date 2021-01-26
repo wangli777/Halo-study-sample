@@ -6,8 +6,9 @@ import com.leenow.demo.cache.AbstractStringCacheStore;
 import com.leenow.demo.exception.BadRequestExpection;
 import com.leenow.demo.exception.NotFoundExpection;
 import com.leenow.demo.model.param.LoginParam;
-import com.leenow.demo.security.SecurityUtils;
-import com.leenow.demo.security.context.SecutiryContextHolder;
+import com.leenow.demo.security.authentication.Authentication;
+import com.leenow.demo.security.util.SecurityUtils;
+import com.leenow.demo.security.context.SecurityContextHolder;
 import com.leenow.demo.security.token.AuthToken;
 import com.leenow.demo.util.UUIDUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //get user
         final User user = this.authenticate(loginParam);
 
-        if (SecutiryContextHolder.getContext().isAuthenticated()) {
+        if (SecurityContextHolder.getContext().isAuthenticated()) {
             throw new BadRequestExpection("您已登录，请不要重复登录");
         }
 
@@ -105,6 +106,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public boolean passwordMatch(@NonNull User user, @Nullable String password) {
         Assert.notNull(user, "User must not be null");
         return CharSequenceUtil.isNotBlank(user.getPassword()) && BCrypt.checkpw(password, user.getPassword());
+    }
+
+    @Override
+    public Optional<User> getAdminUser() {
+        return getBaseMapper().findByUsername("wangli");
+    }
+
+    @Override
+    public void clearToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            throw new BadRequestExpection("您尚未登录，无法注销");
+        }
+        User user = authentication.getUserDetail().getUser();
+
+        cacheStore.getAny(SecurityUtils.buildTokenAccessKeyWithUser(user), String.class).ifPresent(accessToken -> {
+            //remove accessToken
+            cacheStore.delete(SecurityUtils.buildAccessTokenKey(accessToken));
+            cacheStore.delete(SecurityUtils.buildTokenAccessKeyWithUser(user));
+        });
+
+        cacheStore.getAny(SecurityUtils.buildRefreshTokenAccessKeyWithUser(user), String.class).ifPresent(refreshToken -> {
+            //remove accessToken
+            cacheStore.delete(SecurityUtils.buildAccessTokenKey(refreshToken));
+            cacheStore.delete(SecurityUtils.buildTokenAccessKeyWithUser(user));
+        });
+
+        log.info("You have been logged out!");
     }
 
     @Override

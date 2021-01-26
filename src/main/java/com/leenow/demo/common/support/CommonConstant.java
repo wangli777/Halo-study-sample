@@ -9,4 +9,13 @@ import org.springframework.http.HttpHeaders;
  */
 public class CommonConstant {
     public static final String AUTH_TOKEN = HttpHeaders.AUTHORIZATION;
+
+    /**
+     * Admin token header name.
+     */
+    public final static String ADMIN_TOKEN_HEADER_NAME = "ADMIN-" + HttpHeaders.AUTHORIZATION;
+    /**
+     * Admin token param name.
+     */
+    public final static String ADMIN_TOKEN_QUERY_NAME = "admin_token";
 }
