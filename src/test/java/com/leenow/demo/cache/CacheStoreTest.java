@@ -1,6 +1,9 @@
 package com.leenow.demo.cache;
 
+import com.leenow.demo.config.properties.AppConfigProperties;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -13,9 +16,22 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author johnniang
  * @date 3/28/19
  */
-class CacheStoreTest {
 
-    AbstractStringCacheStore cacheStore = new InMemoryCacheStore();
+@SpringBootTest
+class CacheStoreTest {
+    @Autowired
+    private AppConfigProperties configProperties;
+
+    AbstractStringCacheStore cacheStore = new RedisCacheStore(configProperties);
+
+
+    @Test
+    void putEntryTest() {
+        String key = "test_key";
+        String value = "test_value";
+        cacheStore.put(key, value);
+
+    }
 
     @Test
     void putNullValueTest() {

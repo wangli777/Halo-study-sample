@@ -15,3 +15,12 @@ ADMIN-Authorization:9c2858b47a104f7dad1bda3bafacd406
 ### logout
 POST http://localhost:8888/api/user/logout
 ADMIN-Authorization:9c2858b47a104f7dad1bda3bafacd406
+
+### put
+POST http://localhost:8888/api/user/put
+Content-Type: application/json
+
+{
+  "username": "wangli",
+  "password": "123456"
+}

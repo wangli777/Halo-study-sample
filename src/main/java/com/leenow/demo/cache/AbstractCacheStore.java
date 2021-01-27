@@ -51,9 +51,9 @@ public abstract class AbstractCacheStore<K, V> implements CacheStore<K, V> {
 
     abstract Optional<CacheWrapper<V>> getInternal(@NonNull K key);
 
-    abstract void putInternal(@NonNull K key, @NonNull CacheWrapper<V> value);
+    abstract void putInternal(@NonNull K key, @NonNull CacheWrapper<V> cacheWrapper);
 
-    abstract Boolean putInternalIfAbsent(@NonNull K key, @NonNull CacheWrapper<V> value);
+    abstract Boolean putInternalIfAbsent(@NonNull K key, @NonNull CacheWrapper<V> cacheWrapper);
 
 
     @NonNull

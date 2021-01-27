@@ -6,8 +6,8 @@ import com.leenow.demo.config.properties.AppConfigProperties;
 import com.leenow.demo.exception.AuthenticationException;
 import com.leenow.demo.model.entity.user.User;
 import com.leenow.demo.security.authentication.AuthenticationImpl;
-import com.leenow.demo.security.context.SecurityContextImpl;
 import com.leenow.demo.security.context.SecurityContextHolder;
+import com.leenow.demo.security.context.SecurityContextImpl;
 import com.leenow.demo.security.handler.DefaultAuthenticationFailureHandler;
 import com.leenow.demo.security.support.UserDetail;
 import com.leenow.demo.security.util.SecurityUtils;
@@ -56,6 +56,7 @@ public class AdminAuthenticationFilter extends AbstractAuthenticationFilter {
 
         addExcludeUrlPatterns(
                 "/api/user/login",
+                "/api/user/put",
 //                "/api/user/logout",
                 "/api/user/refresh/*",
                 "/api/user/password/code",

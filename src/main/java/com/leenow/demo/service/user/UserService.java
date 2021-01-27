@@ -1,7 +1,7 @@
 package com.leenow.demo.service.user;
 
-import com.leenow.demo.model.entity.user.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.leenow.demo.model.entity.user.User;
 import com.leenow.demo.model.param.LoginParam;
 import com.leenow.demo.security.token.AuthToken;
 import org.springframework.lang.NonNull;
@@ -46,4 +46,6 @@ public interface UserService extends IService<User> {
     Optional<User> getAdminUser();
 
     void clearToken();
+
+    void put(LoginParam loginParam);
 }

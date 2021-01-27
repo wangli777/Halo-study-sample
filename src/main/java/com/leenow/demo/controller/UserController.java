@@ -10,8 +10,6 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 
 /**
  * @author: LeeNow WangLi
@@ -46,5 +44,13 @@ public class UserController {
         return BaseResponse.ok(
                 userService.getAdminUser().orElseThrow(
                         () -> new NotFoundExpection("找不到用户信息")));
+    }
+
+    @PostMapping("put")
+    public BaseResponse<AuthToken> putEntry(@RequestBody @Valid LoginParam loginParam) {
+//        AuthToken token = userService.loginCheck(loginParam);
+        userService.put(loginParam);
+
+        return BaseResponse.ok("ok");
     }
 }

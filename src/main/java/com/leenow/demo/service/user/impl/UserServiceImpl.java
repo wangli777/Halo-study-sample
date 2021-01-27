@@ -2,23 +2,23 @@ package com.leenow.demo.service.user.impl;
 
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.crypto.digest.BCrypt;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.leenow.demo.cache.AbstractStringCacheStore;
 import com.leenow.demo.exception.BadRequestExpection;
 import com.leenow.demo.exception.NotFoundExpection;
+import com.leenow.demo.mapper.user.UserMapper;
+import com.leenow.demo.model.entity.user.User;
 import com.leenow.demo.model.param.LoginParam;
 import com.leenow.demo.security.authentication.Authentication;
-import com.leenow.demo.security.util.SecurityUtils;
 import com.leenow.demo.security.context.SecurityContextHolder;
 import com.leenow.demo.security.token.AuthToken;
+import com.leenow.demo.security.util.SecurityUtils;
+import com.leenow.demo.service.user.UserService;
 import com.leenow.demo.util.UUIDUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.leenow.demo.model.entity.user.User;
-import com.leenow.demo.mapper.user.UserMapper;
-import com.leenow.demo.service.user.UserService;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
@@ -134,6 +134,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         });
 
         log.info("You have been logged out!");
+    }
+
+    @Override
+    public void put(LoginParam loginParam) {
+        cacheStore.put(loginParam.getUsername(), loginParam.getPassword());
     }
 
     @Override
