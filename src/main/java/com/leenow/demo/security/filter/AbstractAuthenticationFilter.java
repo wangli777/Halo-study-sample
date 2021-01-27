@@ -61,6 +61,12 @@ public abstract class AbstractAuthenticationFilter extends OncePerRequestFilter 
 
     protected abstract void doAuthenticate(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException;
 
+    /**
+     * 判断请求是否需要过滤
+     *
+     * @param request
+     * @return true means not filter,false means need filter
+     */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         Assert.notNull(request, "Http servlet request must not be null");
@@ -173,6 +179,7 @@ public abstract class AbstractAuthenticationFilter extends OncePerRequestFilter 
         } catch (AbstractBaseException e) {
             getFailureHandler().onFailure(request, response, e);
         } finally {
+            //清理ThreadLocal中的用户信息，防止内存泄漏
             SecurityContextHolder.clearContext();
         }
     }
