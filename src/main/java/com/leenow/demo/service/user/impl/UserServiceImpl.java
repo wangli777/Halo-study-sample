@@ -4,6 +4,7 @@ import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.leenow.demo.cache.AbstractStringCacheStore;
+import com.leenow.demo.event.LogEvent;
 import com.leenow.demo.exception.BadRequestExpection;
 import com.leenow.demo.exception.NotFoundExpection;
 import com.leenow.demo.mapper.user.UserMapper;
@@ -16,6 +17,7 @@ import com.leenow.demo.security.util.SecurityUtils;
 import com.leenow.demo.service.user.UserService;
 import com.leenow.demo.util.UUIDUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -25,9 +27,9 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 16:44
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 16:44
+ * @description
  */
 @Service
 @Slf4j
@@ -35,8 +37,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     private final AbstractStringCacheStore cacheStore;
 
-    public UserServiceImpl(AbstractStringCacheStore cacheStore) {
+    private final ApplicationEventPublisher eventPublisher;
+
+    public UserServiceImpl(AbstractStringCacheStore cacheStore, ApplicationEventPublisher eventPublisher) {
         this.cacheStore = cacheStore;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -52,6 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // Log it then login successful
         // TODO: 2021/1/24 事件-登录成功
+        eventPublisher.publishEvent(new LogEvent(this));
 
         //Generate accessToken
         return buildAuthToken(user);
@@ -110,7 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Optional<User> getAdminUser() {
-        return getBaseMapper().findByUsername("wangli");
+        return Optional.ofNullable(getBaseMapper().findByUsername("wangli"));
     }
 
     @Override
@@ -143,7 +149,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return this.getBaseMapper().findByUsername(username);
+        return Optional.ofNullable(this.getBaseMapper().findByUsername(username));
     }
 
     @Override
