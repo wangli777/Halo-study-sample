@@ -40,6 +40,7 @@ public class InMemoryCacheStore extends AbstractStringCacheStore {
                 new BasicThreadFactory.Builder().namingPattern("cacheStore-cleaner-schedule-pool-%d").daemon(true).build());
 
         executorService.scheduleAtFixedRate(() -> CACHE_CONTAINER.keySet().forEach(key -> {
+                    log.debug("cacheStore-cleaner-schedule start work");
                     if (!InMemoryCacheStore.this.get(key).isPresent()) {
                         log.debug("Deleted the cache: [{}] for expiration", key);
                     }
@@ -59,8 +60,8 @@ public class InMemoryCacheStore extends AbstractStringCacheStore {
     void putInternal(String key, CacheWrapper<String> value) {
         Assert.hasText(key, "Cache key must not be blank");
         Assert.notNull(value, "Cache value must not be null");
-        CacheWrapper<String> cacheWrapper = CACHE_CONTAINER.put(key, value);
-        log.debug("InMemory Cache put a entry, key:{},value:{}", key, cacheWrapper);
+        CacheWrapper<String> result = CACHE_CONTAINER.put(key, value);
+        log.debug("InMemory Cache put a entry, key:{},value:{};result:{}", key, value, result);
     }
 
     @Override

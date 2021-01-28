@@ -11,8 +11,9 @@ spring:
 #  # token加密密钥
 #  secret: 123456
 base:
-  cache: redis
-  cache-redis-nodes: [ '172.26.40.168:6379' ]
+  #  cache: redis
+  cache: memory
+#  cache-redis-nodes: [ '172.26.40.168:6379' ]
 #  cache-redis-nodes: ['127.0.0.1:6380', '127.0.0.1:6379']
 
 
