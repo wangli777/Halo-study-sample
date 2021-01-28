@@ -3,15 +3,14 @@ package com.leenow.demo.util;
 //import org.hibernate.validator.internal.engine.path.PathImpl;
 
 import jakarta.validation.ConstraintViolation;
-//import jakarta.validation.ConstraintViolationException;
-//import jakarta.validation.Path;
-//import jakarta.validation.Validation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.FieldError;
 
-//import javax.validation.*;
 import java.util.*;
 //import java.util.concurrent.atomic.AtomicInteger;
 
@@ -23,61 +22,61 @@ import java.util.*;
  */
 public class ValidationUtils {
 
-//    private static volatile Validator VALIDATOR;
+    private static volatile Validator VALIDATOR;
 
     private ValidationUtils() {
     }
 
-//    /**
-//     * Gets validator, or create it.
-//     *
-//     * @return validator
-//     */
-//    @NonNull
-//    public static Validator getValidator() {
-//        if (VALIDATOR == null) {
-//            synchronized (run.halo.app.utils.ValidationUtils.class) {
-//                if (VALIDATOR == null) {
-//                    // Init the validation
-//                    VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
-//                }
-//            }
-//        }
-//
-//        return VALIDATOR;
-//    }
-//
-//    /**
-//     * Validates bean by hand.
-//     *
-//     * @param obj    bean to be validated
-//     * @param groups validation group
-//     * @throws ConstraintViolationException throw if validation failure
-//     */
-//    public static void validate(Object obj, Class<?>... groups) {
-//
-//        Validator validator = getValidator();
-//
-//        if (obj instanceof Iterable) {
-//            // validate for iterable
-//            validate((Iterable<?>) obj, groups);
-//        } else {
-//            // validate the non-iterable object
-//            Set<ConstraintViolation<Object>> constraintViolations = validator.validate(obj, groups);
-//
-//            if (!CollectionUtils.isEmpty(constraintViolations)) {
-//                // If contain some errors then throw constraint violation exception
-//                throw new ConstraintViolationException(constraintViolations);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Validates iterable objects.
-//     *
-//     * @param objs   iterable objects could be null
-//     * @param groups validation groups
-//     */
+    /**
+     * Gets validator, or create it.
+     *
+     * @return validator
+     */
+    @NonNull
+    public static Validator getValidator() {
+        if (VALIDATOR == null) {
+            synchronized (ValidationUtils.class) {
+                if (VALIDATOR == null) {
+                    // Init the validation
+                    VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
+                }
+            }
+        }
+
+        return VALIDATOR;
+    }
+
+    /**
+     * Validates bean by hand.
+     *
+     * @param obj    bean to be validated
+     * @param groups validation group
+     * @throws ConstraintViolationException throw if validation failure
+     */
+    public static void validate(Object obj, Class<?>... groups) {
+
+        Validator validator = getValidator();
+
+        if (obj instanceof Iterable) {
+            // validate for iterable
+            validate((Iterable<?>) obj, groups);
+        } else {
+            // validate the non-iterable object
+            Set<ConstraintViolation<Object>> constraintViolations = validator.validate(obj, groups);
+
+            if (!CollectionUtils.isEmpty(constraintViolations)) {
+                // If contain some errors then throw constraint violation exception
+                throw new ConstraintViolationException(constraintViolations);
+            }
+        }
+    }
+
+    /**
+     * Validates iterable objects.
+     *
+     * @param objs   iterable objects could be null
+     * @param groups validation groups
+     */
 //    public static void validate(@Nullable Iterable<?> objs, @Nullable Class<?>... groups) {
 //        if (objs == null) {
 //            return;
