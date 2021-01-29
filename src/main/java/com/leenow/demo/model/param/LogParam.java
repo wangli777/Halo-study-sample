@@ -1,12 +1,13 @@
 package com.leenow.demo.model.param;
 
 import com.leenow.demo.model.enums.LogType;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * @author johnniang
@@ -17,14 +18,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LogParam {
 
-    @Size(max = 1023, message = "Length of log key must not be more than {max}")
+    @Size(max = 100, message = "Length of log key must not be more than {max}")
     private String logKey;
 
     @NotNull(message = "Log type must not be null")
     private LogType type;
 
     @NotBlank(message = "Log content must not be blank")
-    @Size(max = 1023, message = "Log content must not be more than 1023")
+    @Size(max = 100, message = "Log content must not be more than {max}")
     private String content;
 
     private String ipAddress;

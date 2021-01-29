@@ -8,7 +8,8 @@ import com.leenow.demo.event.LogEvent;
 import com.leenow.demo.exception.BadRequestExpection;
 import com.leenow.demo.exception.NotFoundExpection;
 import com.leenow.demo.mapper.user.UserMapper;
-import com.leenow.demo.model.entity.user.User;
+import com.leenow.demo.model.entity.User;
+import com.leenow.demo.model.enums.LogType;
 import com.leenow.demo.model.param.LoginParam;
 import com.leenow.demo.security.authentication.Authentication;
 import com.leenow.demo.security.context.SecurityContextHolder;
@@ -56,8 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         // Log it then login successful
-        // TODO: 2021/1/24 事件-登录成功
-        eventPublisher.publishEvent(new LogEvent(this));
+        eventPublisher.publishEvent(new LogEvent(this, user.getUsername(), LogType.LOGGED_IN, user.getNickname()));
 
         //Generate accessToken
         return buildAuthToken(user);
@@ -98,11 +98,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } catch (NotFoundExpection e) {
             log.error("Fail to find username:" + username);
             //记录登录失败事件
+            eventPublisher.publishEvent(new LogEvent(this, loginParam.getUsername(), LogType.LOGIN_FAILED, loginParam.getUsername()));
             throw new BadRequestExpection(msg);
         }
 
         if (!passwordMatch(user, loginParam.getPassword())) {
             //记录登录失败事件
+            eventPublisher.publishEvent(new LogEvent(this, loginParam.getUsername(), LogType.LOGIN_FAILED, loginParam.getUsername()));
+
             throw new BadRequestExpection(msg);
         }
         return user;
@@ -116,7 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Optional<User> getAdminUser() {
-        return Optional.ofNullable(getBaseMapper().findByUsername("wangli"));
+        return getBaseMapper().findByUsername("wangli");
     }
 
     @Override
@@ -138,6 +141,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             cacheStore.delete(SecurityUtils.buildAccessTokenKey(refreshToken));
             cacheStore.delete(SecurityUtils.buildTokenAccessKeyWithUser(user));
         });
+        // logout event log
+        eventPublisher.publishEvent(new LogEvent(this, user.getUsername(), LogType.LOGGED_OUT, user.getUsername()));
 
         log.info("You have been logged out!");
     }
@@ -149,7 +154,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.ofNullable(this.getBaseMapper().findByUsername(username));
+//        return Optional.ofNullable(this.getBaseMapper().findByUsername(username));
+        return this.getBaseMapper().findByUsername(username);
     }
 
     @Override
