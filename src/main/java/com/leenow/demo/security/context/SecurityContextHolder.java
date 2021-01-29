@@ -4,9 +4,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 19:37
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 19:37
+ * @description
  */
 public class SecurityContextHolder {
     private static final ThreadLocal<SecurityContext> CONTEXT_HOLDER = new ThreadLocal<>();

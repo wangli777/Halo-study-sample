@@ -3,9 +3,9 @@ package com.leenow.demo.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 18:14
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 18:14
+ * @description
  */
 public class NotFoundExpection extends AbstractBaseException {
 

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/25 22:15
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/25 22:15
+ * @description
  */
 @Data
 @ConfigurationProperties("base")

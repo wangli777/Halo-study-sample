@@ -9,12 +9,12 @@ Content-Type: application/json
 
 ### info
 GET http://localhost:8888/api/user/info
-ADMIN-Authorization:9c2858b47a104f7dad1bda3bafacd406
+ADMIN-Authorization:709cae4bc0474fccb4250c4650d5fbb1
 
 
 ### logout
 POST http://localhost:8888/api/user/logout
-ADMIN-Authorization:9c2858b47a104f7dad1bda3bafacd406
+ADMIN-Authorization:230fdfc4981c40c3bf60bb6a143c5110
 
 ### put
 POST http://localhost:8888/api/user/put

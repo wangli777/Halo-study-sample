@@ -1,7 +1,7 @@
 package com.leenow.demo.service.user.impl;
 
 import cn.hutool.crypto.digest.BCrypt;
-import com.leenow.demo.model.entity.user.User;
+import com.leenow.demo.model.entity.User;
 import com.leenow.demo.model.param.LoginParam;
 import com.leenow.demo.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,12 +10,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 20:36
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 20:36
+ * @description
  */
 @SpringBootTest
 @Slf4j

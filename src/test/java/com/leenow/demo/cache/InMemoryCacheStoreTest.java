@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/26 20:37
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/26 20:37
+ * @description
  */
 class InMemoryCacheStoreTest {
 

@@ -2,19 +2,20 @@ package com.leenow.demo.controller;
 
 import com.leenow.demo.common.response.BaseResponse;
 import com.leenow.demo.exception.NotFoundExpection;
-import com.leenow.demo.model.entity.user.User;
+import com.leenow.demo.model.entity.User;
 import com.leenow.demo.model.param.LoginParam;
 import com.leenow.demo.security.token.AuthToken;
 import com.leenow.demo.service.user.UserService;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 16:21
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 16:21
+ * @description
  */
 @RestController
 @Slf4j

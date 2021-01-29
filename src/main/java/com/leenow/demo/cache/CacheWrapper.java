@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/25 22:29
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/25 22:29
+ * @description
  */
 @Data
 @ToString

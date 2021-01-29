@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 16:49
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 16:49
+ * @description
  */
 @Data
 public class AuthToken {

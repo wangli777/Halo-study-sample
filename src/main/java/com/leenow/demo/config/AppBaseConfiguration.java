@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/25 22:22
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/25 22:22
+ * @description
  */
 @Configuration
 @EnableConfigurationProperties(AppConfigProperties.class)

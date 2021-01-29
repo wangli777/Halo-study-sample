@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 /**
- * @author: bg395819 WangLi
- * @date: 21/1/28 14:24
- * @description: 记录接口请求、响应日志
+ * @author bg395819 WangLi
+ * @date 21/1/28 14:24
+ * @description 记录接口请求、响应日志
  */
 @Aspect
 @Component

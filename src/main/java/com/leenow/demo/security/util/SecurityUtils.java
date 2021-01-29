@@ -1,12 +1,12 @@
 package com.leenow.demo.security.util;
 
-import com.leenow.demo.model.entity.user.User;
+import com.leenow.demo.model.entity.User;
 import org.springframework.util.Assert;
 
 /**
- * @author: bg395819 WangLi
- * @date: 21/1/26 17:07
- * @description:
+ * @author bg395819 WangLi
+ * @date 21/1/26 17:07
+ * @description
  */
 public class SecurityUtils {
     /**

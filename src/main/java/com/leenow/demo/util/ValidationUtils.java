@@ -1,17 +1,14 @@
 package com.leenow.demo.util;
 
-//import org.hibernate.validator.internal.engine.path.PathImpl;
-
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
+import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.FieldError;
 
+import javax.validation.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 //import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -77,33 +74,33 @@ public class ValidationUtils {
      * @param objs   iterable objects could be null
      * @param groups validation groups
      */
-//    public static void validate(@Nullable Iterable<?> objs, @Nullable Class<?>... groups) {
-//        if (objs == null) {
-//            return;
-//        }
-//
-//        // get validator
-//        Validator validator = getValidator();
-//
-//        // wrap index
-//        AtomicInteger i = new AtomicInteger(0);
-//        final Set<ConstraintViolation<?>> allViolations = new LinkedHashSet<>();
-//        objs.forEach(obj -> {
-//            int index = i.getAndIncrement();
-//            Set<? extends ConstraintViolation<?>> violations = validator.validate(obj, groups);
-//            violations.forEach(violation -> {
-//                Path path = violation.getPropertyPath();
-//                if (path instanceof PathImpl) {
-//                    PathImpl pathImpl = (PathImpl) path;
-//                    pathImpl.makeLeafNodeIterableAndSetIndex(index);
-//                }
-//                allViolations.add(violation);
-//            });
-//        });
-//        if (!CollectionUtils.isEmpty(allViolations)) {
-//            throw new ConstraintViolationException(allViolations);
-//        }
-//    }
+    public static void validate(@Nullable Iterable<?> objs, @Nullable Class<?>... groups) {
+        if (objs == null) {
+            return;
+        }
+
+        // get validator
+        Validator validator = getValidator();
+
+        // wrap index
+        AtomicInteger i = new AtomicInteger(0);
+        final Set<ConstraintViolation<?>> allViolations = new LinkedHashSet<>();
+        objs.forEach(obj -> {
+            int index = i.getAndIncrement();
+            Set<? extends ConstraintViolation<?>> violations = validator.validate(obj, groups);
+            violations.forEach(violation -> {
+                Path path = violation.getPropertyPath();
+                if (path instanceof PathImpl) {
+                    PathImpl pathImpl = (PathImpl) path;
+                    pathImpl.makeLeafNodeIterableAndSetIndex(index);
+                }
+                allViolations.add(violation);
+            });
+        });
+        if (!CollectionUtils.isEmpty(allViolations)) {
+            throw new ConstraintViolationException(allViolations);
+        }
+    }
 
     /**
      * 将字段验证错误转换为标准的map型，key:value = field:message

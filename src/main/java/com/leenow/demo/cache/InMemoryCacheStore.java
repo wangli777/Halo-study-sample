@@ -15,9 +15,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @author: bg395819 WangLi
- * @date: 21/1/26 13:41
- * @description:
+ * @author bg395819 WangLi
+ * @date 21/1/26 13:41
+ * @description
  */
 @Slf4j
 public class InMemoryCacheStore extends AbstractStringCacheStore {
@@ -41,9 +41,9 @@ public class InMemoryCacheStore extends AbstractStringCacheStore {
 
         executorService.scheduleAtFixedRate(() -> CACHE_CONTAINER.keySet().forEach(key -> {
                     log.debug("cacheStore-cleaner-schedule start work");
-                    if (!InMemoryCacheStore.this.get(key).isPresent()) {
-                        log.debug("Deleted the cache: [{}] for expiration", key);
-                    }
+            if (InMemoryCacheStore.this.get(key).isEmpty()) {
+                log.debug("Deleted the cache: [{}] for expiration", key);
+            }
                 }), 0, PERIOD, TimeUnit.MILLISECONDS
         );
 

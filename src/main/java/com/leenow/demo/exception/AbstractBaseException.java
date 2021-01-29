@@ -5,9 +5,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 18:10
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 18:10
+ * @description
  */
 public abstract class AbstractBaseException extends RuntimeException {
 
@@ -16,11 +16,11 @@ public abstract class AbstractBaseException extends RuntimeException {
      */
     private Object errorData;
 
-    public AbstractBaseException(String message) {
+    protected AbstractBaseException(String message) {
         super(message);
     }
 
-    public AbstractBaseException(String message, Throwable cause) {
+    protected AbstractBaseException(String message, Throwable cause) {
         super(message, cause);
     }
 

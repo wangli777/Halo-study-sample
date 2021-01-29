@@ -11,9 +11,9 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/25 22:12
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/25 22:12
+ * @description
  */
 @Slf4j
 public abstract class AbstractCacheStore<K, V> implements CacheStore<K, V> {
@@ -57,7 +57,7 @@ public abstract class AbstractCacheStore<K, V> implements CacheStore<K, V> {
 
 
     @NonNull
-    private CacheWrapper<V> buildCacheWrapper(@NonNull V value, long timeout, @NonNull TimeUnit timeUnit) {
+    private CacheWrapper<V> buildCacheWrapper(@NonNull V value, long timeout, TimeUnit timeUnit) {
         Assert.notNull(value, "Cache value must not be null");
         Assert.isTrue(timeout >= 0, "Cache expiration timeout must not be less than 1");
 

@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 16:52
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 16:52
+ * @description
  */
 @Data
 @ToString

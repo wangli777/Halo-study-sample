@@ -3,9 +3,9 @@ package com.leenow.demo.security.context;
 import com.leenow.demo.security.authentication.Authentication;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 19:33
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 19:33
+ * @description
  */
 public interface SecurityContext {
     Authentication getAuthentication();

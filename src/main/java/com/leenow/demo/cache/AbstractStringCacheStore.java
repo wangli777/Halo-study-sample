@@ -10,9 +10,9 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/25 22:27
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/25 22:27
+ * @description
  */
 @Slf4j
 public abstract class AbstractStringCacheStore extends AbstractCacheStore<String, String> {

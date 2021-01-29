@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 19:34
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 19:34
+ * @description
  */
 @AllArgsConstructor
 @NoArgsConstructor

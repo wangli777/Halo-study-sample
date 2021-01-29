@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/25 21:56
- * @description: 存储数据接口，可以是memory内存、redis等实现
+ * @author LeeNow WangLi
+ * @date 2021/1/25 21:56
+ * @description 存储数据接口，可以是memory内存、redis等实现
  */
 public interface CacheStore<K, V> {
     /**
@@ -24,7 +24,6 @@ public interface CacheStore<K, V> {
      * put方法，设置键值对
      *
      * @param key key
-     * @return void
      */
     void put(@NonNull K key, @NonNull V value);
 

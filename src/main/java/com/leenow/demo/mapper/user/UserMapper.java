@@ -1,10 +1,11 @@
 package com.leenow.demo.mapper.user;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.leenow.demo.model.entity.user.User;
+import com.leenow.demo.model.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
+
+import java.util.Optional;
 
 /**
  * @author LeeNow WangLi
@@ -18,8 +19,8 @@ public interface UserMapper extends BaseMapper<User> {
      * @param username username
      * @return Optional<User>
      */
-    @Nullable
-    User findByUsername(@NonNull @Param("username") String username);
+
+    Optional<User> findByUsername(@NonNull @Param("username") String username);
 
 
 }

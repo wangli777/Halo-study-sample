@@ -1,12 +1,12 @@
 //package com.leenow.demo.service.security;
 //
 ///**
-// * @author: bg395819 WangLi
-// * @date: 21/1/26 15:30
-// * @description:
+// * @author bg395819 WangLi
+// * @date 21/1/26 15:30
+// * @description
 // */
 //
-//import com.leenow.demo.model.entity.user.User;
+//import com.leenow.demo.model.entity.User;
 //import com.leenow.demo.util.DateUtils;
 //import com.leenow.demo.util.UUIDUtils;
 //import io.jsonwebtoken.Claims;
@@ -22,9 +22,9 @@
 //import java.util.concurrent.TimeUnit;
 //
 ///**
-// * @author: bg395819 WangLi
-// * @date: 21/1/26 15:30
-// * @description: JwtToken生成的工具类
+// * @author bg395819 WangLi
+// * @date 21/1/26 15:30
+// * @description JwtToken生成的工具类
 // * <p>
 // * JWT token的格式：header.payload.signature
 // * header的格式（算法、token的类型）：

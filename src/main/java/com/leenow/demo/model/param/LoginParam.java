@@ -1,13 +1,14 @@
 package com.leenow.demo.model.param;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 17:18
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 17:18
+ * @description
  */
 @Data
 public class LoginParam {

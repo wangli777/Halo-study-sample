@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leenow.demo.cache.AbstractStringCacheStore;
 import com.leenow.demo.config.properties.AppConfigProperties;
 import com.leenow.demo.exception.AuthenticationException;
-import com.leenow.demo.model.entity.user.User;
+import com.leenow.demo.model.entity.User;
 import com.leenow.demo.security.authentication.AuthenticationImpl;
 import com.leenow.demo.security.context.SecurityContextHolder;
 import com.leenow.demo.security.context.SecurityContextImpl;
@@ -39,7 +39,6 @@ import static com.leenow.demo.common.support.CommonConstant.ADMIN_TOKEN_QUERY_NA
 @Order(1)
 public class AdminAuthenticationFilter extends AbstractAuthenticationFilter {
 
-    private final AppConfigProperties configProperties;
 
     private final UserService userService;
 
@@ -49,7 +48,6 @@ public class AdminAuthenticationFilter extends AbstractAuthenticationFilter {
                                      ObjectMapper objectMapper) {
         super(configProperties, cacheStore);
         this.userService = userService;
-        this.configProperties = configProperties;
 
         //需要过滤的url
         addUrlPatterns("/api/user/**");
@@ -95,7 +93,7 @@ public class AdminAuthenticationFilter extends AbstractAuthenticationFilter {
         // Get user id from cache
         Optional<Integer> optionalUserId = cacheStore.getAny(SecurityUtils.buildAccessTokenKey(token), Integer.class);
 
-        if (!optionalUserId.isPresent()) {
+        if (optionalUserId.isEmpty()) {
             throw new AuthenticationException("Token 已过期或不存在").setErrorData(token);
         }
 

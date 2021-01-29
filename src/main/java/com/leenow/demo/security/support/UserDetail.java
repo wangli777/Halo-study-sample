@@ -1,17 +1,17 @@
 package com.leenow.demo.security.support;
 
-import com.leenow.demo.model.entity.user.User;
+import com.leenow.demo.exception.AuthenticationException;
+import com.leenow.demo.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.lang.NonNull;
-import com.leenow.demo.exception.AuthenticationException;
 
 /**
- * @author: LeeNow WangLi
- * @date: 2021/1/24 18:58
- * @description:
+ * @author LeeNow WangLi
+ * @date 2021/1/24 18:58
+ * @description
  */
 @EqualsAndHashCode
 @ToString
