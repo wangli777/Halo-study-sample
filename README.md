@@ -2,15 +2,21 @@
 
 **这是我个人对[Halo](https://github.com/halo-dev/halo) 项目的学习项目，尝试梳理一下这个项目的设计思路。**
 
-   * [数据缓存模块](#数据缓存模块)
-      * [缓存类设计](#缓存类设计)
-      * [配置中定义缓存实现类](#配置中定义缓存实现类)
-   * [登录模块(安全模块)](#登录模块安全模块)
-      * [使用ThreadLocal存储用户信息](#使用threadlocal存储用户信息)
-      * [使用自定义Token](#使用自定义token)
-         * [登陆成功时构建token并存储到CacheStore中](#登陆成功时构建token并存储到cachestore中)
-         * [过滤器中将用户信息存到ThreadLocal](#过滤器中将用户信息存到threadlocal)
-   * [全局异常处理](#全局异常处理)
+    * [数据缓存模块](#数据缓存模块)
+        * [缓存类设计](#缓存类设计)
+        * [配置中定义缓存实现类](#配置中定义缓存实现类)
+    * [登录模块(安全模块)](#登录模块安全模块)
+        * [使用ThreadLocal存储用户信息](#使用threadlocal存储用户信息)
+        * [使用自定义Token](#使用自定义token)
+            * [登陆成功时构建token并存储到CacheStore中](#登陆成功时构建token并存储到cachestore中)
+            * [过滤器中将用户信息存到ThreadLocal](#过滤器中将用户信息存到threadlocal)
+    * [全局异常处理](#全局异常处理)
+    * [AOP记录接口日志](#aop记录接口日志)
+    * [观察者模式\-发布订阅模式](#观察者模式-发布订阅模式)
+        * [实现SpringBoot事件监听机制](#实现springboot事件监听机制)
+            * [定义注册事件](#定义注册事件)
+            * [定义监听器](#定义监听器)
+            * [事件发布者发布事件](#事件发布者发布事件)
 
 ## 数据缓存模块
 
@@ -328,4 +334,140 @@ public abstract class AbstractAuthenticationFilter extends OncePerRequestFilter 
    }
    ```
 
-   
+## AOP记录接口日志
+
+```java
+@Aspect
+@Component
+@Slf4j
+public class ControllerLogAop {
+    @Pointcut("execution(* *..*.*.controller..*.*(..))")
+    private void controller() {
+    }
+    @Around("controller()")
+    public Object controllerLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        //被织入advice的类名
+        String className = joinPoint.getTarget().getClass().getSimpleName();
+        //方法名
+        String methodName = joinPoint.getSignature().getName();
+        //方法参数
+        Object[] args = joinPoint.getArgs();
+
+        HttpServletRequest request = ServletUtils.getCurrentRequest().orElseThrow(() -> new BadRequestExpection("无法获取当前httpServletRequest"));
+
+        //记录请求日志
+        printRequestLog(request, className, methodName, args);
+
+        TimeInterval timer = DateUtil.timer();
+        Object returnObj = joinPoint.proceed();
+        long cost = timer.interval();
+        //记录响应日志
+        printResponseLog(className, methodName, args, returnObj, cost);
+
+        return returnObj;
+    }
+}
+```
+
+## 观察者模式-发布订阅模式
+
+系统中观察者模式的运用之一是：用户登录成功、失败、注销时，异步记录到日志表中，这一过程使用的SpringBoot提供的事件监听机制。观察者模式的定义：**在对象之间定义一个一对多的依赖，当一个对象状态改变的时候，所有依赖的对象都会自动收到通知**。
+
+观察者模式和发布订阅模式是有一些区别，主要有以下几点：
+
+- 观察者模式：观察者订阅主题，主题也维护观察者的记录，而后者：**发布者和订阅者不需要彼此了解**，而是在消息队列或代理的帮助下通信，实现松耦合。
+- 观察者模式主要以同步方式实现，即某个事件发生时，由Subject调用所有监听器的对应方法，发布订阅模式则主要使用消息队列异步实现。
+
+#### 实现SpringBoot事件监听机制
+
+1. ##### 定义注册事件
+
+   继承ApplicationEvent类
+
+   ```java
+   public class LogEvent extends ApplicationEvent {
+       @Getter
+       private final transient LogParam logParam;
+       public LogEvent(Object source, LogParam logParam) {
+           super(source);
+   		...
+           this.logParam = logParam;
+       }
+       public LogEvent(Object source, String logKey, LogType type, String content) {
+           this(source, new LogParam(logKey, type, content));
+       }
+   }
+   ```
+
+2. ##### 定义监听器
+
+   有两种方式：
+
+    - 使用@EventListener注解
+
+      ```java
+      @Component
+      public class LogEventListener {
+      
+          private final LogService logService;
+      
+          public LogEventListener(LogService logService) {
+              this.logService = logService;
+          }
+          @EventListener
+          @Async
+          public void onApplicationEvent(LogEvent event) {
+              // Convert to log
+              Log logToCreate = event.getLogParam().convertTo();
+              // Create log
+              logService.create(logToCreate);
+          }
+      }
+      ```
+
+    - 实现EventListen接口
+
+      ```java
+      @Component
+      public class LogEventListener implements ApplicationListener<LogEvent> {
+      
+          private final LogService logService;
+      
+          public LogEventListener(LogService logService) {
+              this.logService = logService;
+          }
+          @Override
+          @Async
+          public void onApplicationEvent(LogEvent event) {
+              // Convert to log
+              Log logToCreate = event.getLogParam().convertTo();
+              // Create log
+              logService.create(logToCreate);
+          }
+      }
+      ```
+
+3. ##### 事件发布者发布事件
+
+   需发布事件的类中注入事件发布者
+
+   ```java
+   @Service
+   @Slf4j
+   public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+       private final ApplicationEventPublisher eventPublisher;
+       public UserServiceImpl(ApplicationEventPublisher eventPublisher) {
+           this.eventPublisher = eventPublisher;
+       }
+       @Override
+       public AuthToken loginCheck(@NonNull final LoginParam loginParam) {
+   		登录成功逻辑...
+           // Log it then login successful
+           eventPublisher.publishEvent(new LogEvent(this, user.getUsername(), LogType.LOGGED_IN, user.getNickname()));
+           //Generate accessToken
+           return buildAuthToken(user);
+       }
+   ```
+
+
+
