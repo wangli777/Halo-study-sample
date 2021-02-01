@@ -1,0 +1,28 @@
+# 应用名称
+spring.application.name: demo
+
+spring:
+  profiles:
+    #    active: @profiles.active@
+    active: dev
+#    mvc:
+#      static-path-pattern: /res/**
+#    resources:
+#      static-locations: [classpath:/haha/]
+#jwt:
+#  # token过期时间
+#  expiration: 30
+#  # token加密密钥
+#  secret: 123456
+base:
+  #  cache: redis
+  cache: memory
+#  cache-redis-nodes:
+#    - '172.26.40.168:6379'
+#    - '172.26.40.169:6379'
+#  cache-redis-nodes: ['127.0.0.1:6380', '127.0.0.1:6379']
+
+
+
+
+
