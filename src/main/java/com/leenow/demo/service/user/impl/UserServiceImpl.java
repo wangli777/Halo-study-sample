@@ -138,8 +138,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         cacheStore.getAny(SecurityUtils.buildRefreshTokenAccessKeyWithUser(user), String.class).ifPresent(refreshToken -> {
             //remove accessToken
-            cacheStore.delete(SecurityUtils.buildAccessTokenKey(refreshToken));
-            cacheStore.delete(SecurityUtils.buildTokenAccessKeyWithUser(user));
+            cacheStore.delete(SecurityUtils.buildRefreshTokenKey(refreshToken));
+            cacheStore.delete(SecurityUtils.buildRefreshTokenAccessKeyWithUser(user));
         });
         // logout event log
         eventPublisher.publishEvent(new LogEvent(this, user.getUsername(), LogType.LOGGED_OUT, user.getUsername()));
