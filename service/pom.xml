@@ -12,9 +12,6 @@
     <name>service</name>
     <packaging>jar</packaging>
     <description>Service module</description>
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
     <dependencies>
         <!--        <dependency>-->
         <!--            <groupId>com.leenow</groupId>-->

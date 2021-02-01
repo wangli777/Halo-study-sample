@@ -14,16 +14,12 @@
     <packaging>jar</packaging>
     <description>Web module</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>com.leenow</groupId>
             <artifactId>service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -68,8 +64,8 @@
                 <configuration>
                     <!-- forceJavacCompilerUse can help to show the location of exact compilation error -->
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${java.source.version}</source>
+                    <target>${java.target.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

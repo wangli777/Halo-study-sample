@@ -23,6 +23,8 @@ spring:
 logging:
   config: classpath:logback/logback-spring.xml
   level:
-    com.leenow.dao.mapper: info
+    # 日志root级别
+    root: info
+    com.leenow.dao.mapper: error
 
 

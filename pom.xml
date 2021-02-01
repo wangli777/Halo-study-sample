@@ -26,7 +26,8 @@
     </parent>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.source.version>11</java.source.version>
+        <java.target.version>11</java.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
@@ -34,64 +35,51 @@
         <jjwt.version>0.9.1</jjwt.version>
         <druid.version>1.2.4</druid.version>
         <mysql-connector.version>8.0.22</mysql-connector.version>
+        <demo-common.version>0.0.1-SNAPSHOT</demo-common.version>
+        <demo-dao.version>0.0.1-SNAPSHOT</demo-dao.version>
+        <demo-security.version>0.0.1-SNAPSHOT</demo-security.version>
+        <demo-service.version>0.0.1-SNAPSHOT</demo-service.version>
+        <demo-web.version>0.0.1-SNAPSHOT</demo-web.version>
+        <hutool.version>5.5.7</hutool.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
+        <redis.clients.version>3.3.0</redis.clients.version>
+        <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-
+        <!--AOP依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-
-        <!--        &lt;!&ndash; jwt实现 &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>io.jsonwebtoken</groupId>-->
-        <!--            <artifactId>jjwt</artifactId>-->
-        <!--        </dependency>-->
-
-
         <!-- hutool工具包 -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.5.7</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <!-- commons-lang3 工具包-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.11</version>
         </dependency>
-
-
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
-
+        <!--开发时用，热部署-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--配置文件提示-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- 测试-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -111,32 +99,81 @@
 
 
         <dependencies>
+            <!--demo通用模块-->
+            <dependency>
+                <groupId>com.leenow</groupId>
+                <artifactId>common</artifactId>
+                <version>${demo-common.version}</version>
+            </dependency>
+            <!--demo dao模块-->
+            <dependency>
+                <groupId>com.leenow</groupId>
+                <artifactId>dao</artifactId>
+                <version>${demo-dao.version}</version>
+            </dependency>
+            <!--demo 安全模块-->
+            <dependency>
+                <groupId>com.leenow</groupId>
+                <artifactId>security</artifactId>
+                <version>${demo-security.version}</version>
+            </dependency>
+            <!--demo service模块-->
+            <dependency>
+                <groupId>com.leenow</groupId>
+                <artifactId>service</artifactId>
+                <version>${demo-service.version}</version>
+            </dependency>
+            <!--demo web模块-->
+<!--            <dependency>-->
+<!--                <groupId>com.leenow</groupId>-->
+<!--                <artifactId>web</artifactId>-->
+<!--                <version>${demo-web.version}</version>-->
+<!--            </dependency>-->
+
             <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
             <!-- jedis-redis客户端-->
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
-                <version>3.3.0</version>
+                <version>${redis.clients.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
             <!-- 数据字段校验  -->
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>6.1.6.Final</version>
+                <version>${hibernate-validator.version}</version>
             </dependency>
+            <!--Springboot web依赖-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
+            <!--Springboot thymeleaf依赖-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
 
+            <!--Hutool Java工具包-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+            <!-- commons-lang3 工具包-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+            <!--jwt工具 jjwt-->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
@@ -169,13 +206,6 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>com.leenow</groupId>
-                <artifactId>common</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 

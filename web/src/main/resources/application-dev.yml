@@ -56,7 +56,8 @@ mybatis-plus:
 logging:
   config: classpath:logback/logback-spring.xml
   level:
-    #    root: debug
+    # 日志root级别
+    root: debug
     com.leenow.dao.mapper: debug
 
 
