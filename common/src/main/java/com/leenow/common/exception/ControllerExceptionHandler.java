@@ -26,7 +26,7 @@ import java.util.Map;
  * @date 21/1/26 18:26
  * @description
  */
-@RestControllerAdvice(value = {"com.leenow.demo.controller"})
+@RestControllerAdvice(value = {"com.leenow.web.controller"})
 @Slf4j
 public class ControllerExceptionHandler {
 

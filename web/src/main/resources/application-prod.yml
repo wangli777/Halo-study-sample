@@ -23,6 +23,6 @@ spring:
 logging:
   config: classpath:logback/logback-spring.xml
   level:
-    com.leenow.demo.mapper: info
+    com.leenow.dao.mapper: info
 
 
