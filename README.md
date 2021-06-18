@@ -1,6 +1,6 @@
 # 工程简介
 
-**这是我个人对[Halo](https://github.com/halo-dev/halo) 项目的学习项目，尝试梳理一下这个项目的设计思路。**
+**这是一个对[Halo](https://github.com/halo-dev/halo) 的学习项目**
 
 * [数据缓存模块](#数据缓存模块)
     * [缓存类设计](#缓存类设计)
